@@ -22,6 +22,7 @@ struct ContentView: View {
     
     @State private var showingAlert = false
     
+    private var screenBoundsWidth = UIScreen.main.bounds.width
     
     var body: some View {
         NavigationStack {
@@ -29,80 +30,105 @@ struct ContentView: View {
                 .toolbar {
                     // Bottom Toolbar
                     ToolbarItemGroup(placement: .bottomBar) {
-                        HStack(alignment: .bottom, spacing: 16) { // Drawing Tools
-                            // Pencil
-                            Button {
-                                isDrawing = true
-                                pencilType = .pencil
-                                pencilType.defaultWidth
-                            } label: {
-                                Image(systemName: "pencil")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
+                        ZStack {
+                            HStack(alignment: .center) { // Drawing Tools
+                                // Pencil
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .pencil
+                                    pencilType.defaultWidth
+                                } label: {
+                                    Image("pencil")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .pencil ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Pen
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .pen
+                                } label: {
+                                    Image("pen")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .pen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Monoline
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .monoline
+                                } label: {
+                                    Image("monoline")
+                                        .resizable()
+                                        .frame(width: 25, height: 70)
+                                }
+                                .padding(pencilType == .monoline ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Fountain: Variable scribbling
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .fountainPen
+                                } label: {
+                                    Image("fountain-pen")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .fountainPen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Marker
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .marker
+                                } label: {
+                                    Image("marker")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .marker ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Crayon
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .crayon
+                                } label: {
+                                    Image("crayon")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .crayon ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                // Water Color
+                                Button {
+                                    isDrawing = true
+                                    pencilType = .watercolor
+                                } label: {
+                                    Image("paintbrush")
+                                        .resizable()
+                                        .frame(width: 25, height: 75)
+                                }
+                                .padding(pencilType == .watercolor ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                
+                                ColorPicker("", selection: $color)
+                                    .frame(width: 25, height: 75)
+                            } // Drawing Tools
                             
-                            // Pen
-                            Button {
-                                isDrawing = true
-                                pencilType = .pen
-                            } label: {
-                                Image(systemName: "applepencil.tip")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
+                            .frame(width: screenBoundsWidth, height: 100)
+                            .background(Color(.white.withAlphaComponent(0.9)))
+                            .background(Color.gray)
                             
-                            // Monoline
-                            Button {
-                                isDrawing = true
-                                pencilType = .monoline
-                            } label: {
-                                Image(systemName: "line.diagonal")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
+                            VStack {
+                                Spacer()
+                                Rectangle()
+                                    .fill(Color(UIColor.lightGray))
+                                    .frame(height: 20)
+                                    .frame(maxWidth: .infinity)
                             }
-                            
-                            // Fountain: Variable scribbling
-                            Button {
-                                isDrawing = true
-                                pencilType = .fountainPen
-                            } label: {
-                                Image(systemName: "paintbrush.pointed")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                            
-                            // Marker
-                            Button {
-                                isDrawing = true
-                                pencilType = .marker
-                            } label: {
-                                Image(systemName: "pencil.tip")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                            
-                            // Crayon
-                            Button {
-                                isDrawing = true
-                                pencilType = .crayon
-                            } label: {
-                                Image(systemName: "medical.thermometer")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                            
-                            // Water Color
-                            Button {
-                                isDrawing = true
-                                pencilType = .watercolor
-                            } label: {
-                                Image(systemName: "paintbrush.pointed")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                        } // Drawing Tools
+                        }
                     }
                 }
+                .background(Color(UIColor.lightGray))
             
             // Top Toolbar
                 .toolbar {
@@ -142,8 +168,6 @@ struct ContentView: View {
                             } label: {
                                 Image(systemName: "eraser.line.dashed")
                             }
-                            
-                            ColorPicker("", selection: $color)
                         } // Modify tools
                         .padding(12)
                         .buttonStyle(.plain)
