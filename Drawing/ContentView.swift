@@ -21,6 +21,7 @@ struct ContentView: View {
     @State private var opacity:Double = 1.0
     
     @State private var showingAlert = false
+    @State private var saveImageAlert = false
     
     private var screenBoundsWidth = UIScreen.main.bounds.width
     
@@ -31,93 +32,96 @@ struct ContentView: View {
                     // Bottom Toolbar
                     ToolbarItemGroup(placement: .bottomBar) {
                         ZStack {
-                            HStack(alignment: .center) { // Drawing Tools
-                                // Pencil
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .pencil
-                                    pencilType.defaultWidth
-                                } label: {
-                                    Image("pencil")
-                                        .resizable()
+                            VStack {
+                                HStack(alignment: .center) { // Drawing Tools
+                                    // Pencil
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .pencil
+                                        pencilType.defaultWidth
+                                    } label: {
+                                        Image("pencil")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .pencil ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Pen
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .pen
+                                    } label: {
+                                        Image("pen")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .pen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Monoline
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .monoline
+                                    } label: {
+                                        Image("monoline")
+                                            .resizable()
+                                            .frame(width: 25, height: 70)
+                                    }
+                                    .padding(pencilType == .monoline ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Fountain: Variable scribbling
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .fountainPen
+                                    } label: {
+                                        Image("fountain-pen")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .fountainPen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Marker
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .marker
+                                    } label: {
+                                        Image("marker")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .marker ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Crayon
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .crayon
+                                    } label: {
+                                        Image("crayon")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .crayon ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    // Water Color
+                                    Button {
+                                        isDrawing = true
+                                        pencilType = .watercolor
+                                    } label: {
+                                        Image("paintbrush")
+                                            .resizable()
+                                            .frame(width: 25, height: 75)
+                                    }
+                                    .padding(pencilType == .watercolor ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                    
+                                    ColorPicker("", selection: $color)
                                         .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .pencil ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
+                                } // Drawing Tools
                                 
-                                // Pen
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .pen
-                                } label: {
-                                    Image("pen")
-                                        .resizable()
-                                        .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .pen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                // Monoline
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .monoline
-                                } label: {
-                                    Image("monoline")
-                                        .resizable()
-                                        .frame(width: 25, height: 70)
-                                }
-                                .padding(pencilType == .monoline ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                // Fountain: Variable scribbling
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .fountainPen
-                                } label: {
-                                    Image("fountain-pen")
-                                        .resizable()
-                                        .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .fountainPen ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                // Marker
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .marker
-                                } label: {
-                                    Image("marker")
-                                        .resizable()
-                                        .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .marker ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                // Crayon
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .crayon
-                                } label: {
-                                    Image("crayon")
-                                        .resizable()
-                                        .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .crayon ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                // Water Color
-                                Button {
-                                    isDrawing = true
-                                    pencilType = .watercolor
-                                } label: {
-                                    Image("paintbrush")
-                                        .resizable()
-                                        .frame(width: 25, height: 75)
-                                }
-                                .padding(pencilType == .watercolor ? EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0) : EdgeInsets(top: 0, leading: 0, bottom: -20, trailing: 0))
-                                
-                                ColorPicker("", selection: $color)
-                                    .frame(width: 25, height: 75)
-                            } // Drawing Tools
+                                .frame(width: screenBoundsWidth, height: 100)
+                                .background(Color(.white.withAlphaComponent(0.9)))
+                                .background(Color.gray)
+                            }
                             
-                            .frame(width: screenBoundsWidth, height: 100)
-                            .background(Color(.white.withAlphaComponent(0.9)))
-                            .background(Color.gray)
-                            
+                            // Bottom tools cover
                             VStack {
                                 Spacer()
                                 Rectangle()
@@ -168,12 +172,31 @@ struct ContentView: View {
                             } label: {
                                 Image(systemName: "eraser.line.dashed")
                             }
+                            
+                            Button {
+                                saveDrawing()
+                            } label: {
+                                Image(systemName: "arrow.down.square")
+                            }
+                            .alert("Saved drawing to your photos album!", isPresented: $saveImageAlert) {
+                                Button("Ok") {}
+                            }
                         } // Modify tools
                         .padding(12)
                         .buttonStyle(.plain)
                     }
                 }
         }
+    }
+    
+    func saveDrawing() {
+        // Get the drawing image from the canvas
+        let drawingImage = canvas.drawing.image(from: canvas.drawing.bounds, scale: 1.0)
+        
+        // Save drawings to the Photos Album
+        UIImageWriteToSavedPhotosAlbum(drawingImage, nil, nil, nil)
+                
+        saveImageAlert = true
     }
 }
 
