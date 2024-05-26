@@ -248,4 +248,3 @@ struct DrawingView: UIViewRepresentable {
 #Preview {
     ContentView()
 }
-
