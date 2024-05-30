@@ -38,7 +38,6 @@ struct ContentView: View {
                                     Button {
                                         isDrawing = true
                                         pencilType = .pencil
-                                        pencilType.defaultWidth
                                     } label: {
                                         Image("pencil")
                                             .resizable()
